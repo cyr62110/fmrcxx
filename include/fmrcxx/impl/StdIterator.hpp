@@ -19,7 +19,7 @@ bool StdIterator<T, It>::fullyConsumed() {
 	if (Iterator<T>::fullyConsumed()) {
 		return true;
 	}
-	return this->current != this->end;
+	return !(this->current < this->end);
 }
 
 template <typename T, typename It>
