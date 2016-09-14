@@ -9,6 +9,10 @@ namespace fmrcxx {
 
 /**
  * \brief Class providing convenient method to iterate over a collection.
+ *
+ *
+ * Before using an iterator, make sure the following rules are respected:
+ * - T must not be a pointer type. Reference type are allowed.
  */
 template <typename T, typename It = std::nullptr_t>
 class Iterator : public IteratorOperation<T, Iterator, Iterator<T, It>> {

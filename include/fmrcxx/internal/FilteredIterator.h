@@ -3,7 +3,8 @@
 
 #include <functional>
 
-#include <fmrcxx/Iterator.h>
+#include <fmrcxx/Macro.h>
+#include <fmrcxx/internal/TransformingIterator.h>
 
 namespace fmrcxx {
 namespace internal {
@@ -12,30 +13,28 @@ namespace internal {
  * \internal
  */
 template <typename T, typename It>
-class FilteredIteratorImpl {
+class FilteredIterator : FMRCXX_PRIVATE TransformingIterator<T> {
 public:
 	/**
 	 * \brief Construct an iterator
 	 * \param filterFunction function that should return true for each element that must be kept.
 	 * \param iterator Iterator that will be filtered
 	 */
-	FilteredIteratorImpl(std::function<bool(const T&)> filterFunction, It&& iterator);
+	FilteredIterator(std::function<bool(const T&)> filterFunction, It&& iterator);
 
 	/**
 	 * Move constructor
 	 */
-	FilteredIteratorImpl(FilteredIteratorImpl&& rhs);
+	FilteredIterator(FilteredIterator&& rhs);
 
-	bool fullyConsumed();
-	T& next();
+FMRCXX_PRIVATE:
+	const T& doComputeNext();
 
-private:
-	It iterator;
 	std::function<bool(const T&)> filterFunction;
 };
 
 }}
 
-#include "FilteredIteratorImpl.hpp"
+#include <fmrcxx/internal/FilteredIterator.hpp>
 
 #endif
