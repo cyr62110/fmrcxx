@@ -10,3 +10,5 @@
 #undef FMRCXX_PRIVATE
 #define FMRCXX_PRIVATE public
 #endif
+
+#endif

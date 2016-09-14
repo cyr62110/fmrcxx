@@ -9,19 +9,26 @@ namespace internal {
 
 template <typename T, typename It>
 FilteredIterator<T, It>::FilteredIterator(std::function<bool(const T&)> filterFunction, It&& iterator) :
-	TransformingIterator(iterator),
+	TransformingIterator<T, It, FilteredIterator<T, It>>(std::move(iterator)),
 	filterFunction(std::move(filterFunction)) {
 }
 
 template <typename T, typename It>
 FilteredIterator<T, It>::FilteredIterator(FilteredIterator<T, It>&& rhs) :
-	TransformingIterator(rhs),
+	TransformingIterator<T, It, FilteredIterator<T, It>>(std::move(rhs)),
 	filterFunction(std::move(rhs.filterFunction)) {
 }
 
 template <typename T, typename It>
-const T& FilteredIterator<T, It>::doComputeNext() {
-
+T* FilteredIterator<T, It>::doComputeNext() {
+	T* computedNext = nullptr;
+	while (computedNext == nullptr && !this->iterator.fullyConsumed()) {
+		T* current = &this->iterator.next();
+		if (this->filterFunction(*current)) {
+			computedNext = current;
+		}
+	}
+	return computedNext;
 }
 
 }}

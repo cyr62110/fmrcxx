@@ -13,7 +13,7 @@ namespace internal {
  * \internal
  */
 template <typename T, typename It>
-class FilteredIterator : FMRCXX_PRIVATE TransformingIterator<T> {
+class FilteredIterator : FMRCXX_PRIVATE TransformingIterator<T, It, FilteredIterator<T, It>> {
 public:
 	/**
 	 * \brief Construct an iterator
@@ -28,7 +28,7 @@ public:
 	FilteredIterator(FilteredIterator&& rhs);
 
 FMRCXX_PRIVATE:
-	const T& doComputeNext();
+	T* doComputeNext();
 
 	std::function<bool(const T&)> filterFunction;
 };
