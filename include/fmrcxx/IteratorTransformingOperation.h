@@ -1,5 +1,5 @@
-#ifndef FMRCXX_ITERATOROPERATION_H_
-#define FMRCXX_ITERATOROPERATION_H_
+#ifndef FMRCXX_ITERATORTRANSFORMINGOPERATION_H_
+#define FMRCXX_ITERATORTRANSFORMINGOPERATION_H_
 
 #include <fmrcxx/internal/FilteredIterator.h>
 #include <cstddef>
@@ -9,13 +9,13 @@
 namespace fmrcxx {
 
 template <typename T, template<typename, typename> class ResultIt, typename BaseIt>
-class IteratorOperation {
+class IteratorTransformingOperation {
 public:
 	ResultIt<T, internal::FilteredIterator<T, BaseIt>> filter(std::function<bool(const T&)>);
 };
 
 }
 
-#include <fmrcxx/impl/IteratorOperation.hpp>
+#include <fmrcxx/impl/IteratorTransformingOperation.hpp>
 
 #endif

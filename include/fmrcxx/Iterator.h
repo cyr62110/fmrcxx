@@ -1,9 +1,9 @@
 #ifndef COLLECTION_ITERATOR_H_
 #define COLLECTION_ITERATOR_H_
 
+#include <fmrcxx/IteratorTransformingOperation.h>
 #include <cstddef>
 
-#include <fmrcxx/IteratorOperation.h>
 
 namespace fmrcxx {
 
