@@ -10,7 +10,8 @@ set(SOURCES
 	RangeTest.cpp
 	StdIterator.cpp
 	internal/TransformingIteratorTest.cpp
-	internal/FilteredIteratorTest.cpp)
+	internal/FilteredIteratorTest.cpp
+	internal/MappingIteratorTest.cpp)
 	
 include_directories(../include)
 add_executable(testLibrary ${SOURCES})
