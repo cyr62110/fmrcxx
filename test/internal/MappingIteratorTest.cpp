@@ -1,7 +1,6 @@
 #include "../catch.hpp"
 
 #include "../util/LightTestObject.h"
-#include "../util/NoMoveTestObject.h"
 
 #include <fmrcxx/Range.h>
 #include <fmrcxx/internal/MappingIterator.h>
@@ -21,23 +20,16 @@ TEST_CASE ("check number of times constructor and destructor are called in stati
 	LightTestObject::resetCounters();
 
 	Range<int> range1(1, 5);
-	MappingIterator<int, int, Range<int>, false> it([](int& elt) {
-		return elt * 2;
-	}, std::move(range1)); // FIXME: forEach to iterate over every single item
+	MappingIterator<LightTestObject, int, Range<int>, false> it([](int& elt) {
+		return LightTestObject(elt);
+	}, std::move(range1));
+
+	while (!it.fullyConsumed()) it.next();
 
 	REQUIRE ( LightTestObject::nbTimeConstructorCalled == 5 );
 	REQUIRE ( LightTestObject::nbTimeCopyConstructorCalled == 0 );
 	REQUIRE ( LightTestObject::nbTimeMoveConstructorCalled == 5 );
 	REQUIRE ( LightTestObject::nbTimeDestructorCalled == 9 );
-}
-
-TEST_CASE ("check doComputeNext in static MappingIterator uses copy iterator if move is not available", "[MappingIterator]") {
-	Range<int> range1(1, 5);
-	MappingIterator<NoMoveTestObject, int, Range<int>, false> it([](int& elt) {
-		NoMoveTestObject o(elt);
-		return o;
-	}, std::move(range1));
-	REQUIRE( *(it.doComputeNext()) == 2 );
 }
 
 TEST_CASE( "check doComputeNext in dynamic MappingIterator", "[MappingIterator]" ) {
@@ -52,9 +44,11 @@ TEST_CASE ("check number of times constructor and destructor are called in dynam
 	LightTestObject::resetCounters();
 
 	Range<int> range1(1, 5);
-	MappingIterator<int, int, Range<int>, false> it([](int& elt) {
-		return elt * 2;
-	}, std::move(range1)); // FIXME: forEach to iterate over every single item
+	MappingIterator<LightTestObject, int, Range<int>, true> it([](int& elt) {
+		return new LightTestObject(elt);
+	}, std::move(range1));
+
+	while (!it.fullyConsumed()) it.next();
 
 	REQUIRE ( LightTestObject::nbTimeConstructorCalled == 5 );
 	REQUIRE ( LightTestObject::nbTimeCopyConstructorCalled == 0 );
