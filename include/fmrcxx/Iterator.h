@@ -15,7 +15,7 @@ namespace fmrcxx {
  * - T must not be a pointer type. Reference type are allowed.
  */
 template <typename T, typename It = std::nullptr_t>
-class Iterator : public IteratorOperation<T, Iterator, Iterator<T, It>> {
+class Iterator : public IteratorTransformingOperation<T, Iterator, Iterator<T, It>> {
 public:
 	/**
 	 * \internal

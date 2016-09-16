@@ -13,6 +13,10 @@ set(SOURCES
 	internal/FilteredIteratorTest.cpp
 	internal/MappingIteratorTest.cpp)
 	
+set(UTIL_SOURCES
+	util/LightTestObject.cpp
+	util/NoMoveTestObject.cpp)
+	
 include_directories(../include)
-add_executable(testLibrary ${SOURCES})
+add_executable(testLibrary ${SOURCES} ${UTIL_SOURCES})
 target_link_libraries(testLibrary fmrcxx)
