@@ -9,6 +9,7 @@ set(SOURCES
 	IteratorTest.cpp
 	RangeTest.cpp
 	StdIterator.cpp
+	IteratorTerminalOperationTest.cpp
 	internal/TransformingIteratorTest.cpp
 	internal/FilteredIteratorTest.cpp
 	internal/MappingIteratorTest.cpp)

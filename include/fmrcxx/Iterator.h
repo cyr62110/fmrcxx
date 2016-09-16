@@ -1,9 +1,10 @@
 #ifndef COLLECTION_ITERATOR_H_
 #define COLLECTION_ITERATOR_H_
 
-#include <fmrcxx/IteratorTransformingOperation.h>
 #include <cstddef>
 
+#include <fmrcxx/IteratorTransformingOperation.h>
+#include <fmrcxx/IteratorTerminalOperation.h>
 
 namespace fmrcxx {
 
@@ -15,7 +16,9 @@ namespace fmrcxx {
  * - T must not be a pointer type. Reference type are allowed.
  */
 template <typename T, typename It = std::nullptr_t>
-class Iterator : public IteratorTransformingOperation<T, Iterator, Iterator<T, It>> {
+class Iterator :
+		public IteratorTransformingOperation<T, Iterator, Iterator<T, It>>,
+		public IteratorTerminalOperation<T, Iterator<T, It>> {
 public:
 	/**
 	 * \internal

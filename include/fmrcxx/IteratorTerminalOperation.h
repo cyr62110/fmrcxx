@@ -7,16 +7,16 @@
 
 namespace fmrcxx {
 
-template <typename T, typename TIt>
-class IteratorEndOperation {
+template <typename T, typename It>
+class IteratorTerminalOperation {
 public:
 	/**
 	 * \brief Run the function passed in parameter for each element in the iterator.
 	 */
 	void forEach(std::function<void(T&)> function);
 
-	template <typename Result>
-	std::unique_ptr<Result> reduce(std::unique_ptr<Result> accumulator, std::function<void(Result&, T&) reduceFunction);
+	template <typename Accumultator>
+	std::unique_ptr<Accumultator> reduce(std::unique_ptr<Accumultator> accumulator, std::function<void(Accumultator&, T&)> reduceFunction);
 
 	/**
 	 * \brief Return the first element present in the iterator.

@@ -2,7 +2,6 @@
 #define FMRCXX_RANGE_H_
 
 #include <fmrcxx/Iterator.h>
-#include <fmrcxx/IteratorTransformingOperation.h>
 
 namespace fmrcxx {
 
@@ -10,7 +9,10 @@ namespace fmrcxx {
  * \brief
  */
 template <typename T>
-class Range : public Iterator<T>, public IteratorTransformingOperation<T, Iterator, Range<T>> {
+class Range :
+		public Iterator<T>,
+		public IteratorTransformingOperation<T, Iterator, Range<T>>,
+		public IteratorTerminalOperation<T, Range<T>> {
 public:
 	Range(T start, T end, T increment = 1);
 	Range(Range&& rhs);

@@ -1,10 +1,10 @@
 #ifndef FMRCXX_ITERATORTRANSFORMINGOPERATION_H_
 #define FMRCXX_ITERATORTRANSFORMINGOPERATION_H_
 
-#include <fmrcxx/internal/FilteredIterator.h>
 #include <cstddef>
 #include <functional>
 
+#include <fmrcxx/internal/FilteredIterator.h>
 
 namespace fmrcxx {
 
