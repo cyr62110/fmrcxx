@@ -19,7 +19,7 @@ TEST_CASE( "do static map compile", "[IteratorTransformingOperation]" ) {
 	});
 }
 
-TEST_CASE( "do static map compile", "[IteratorTransformingOperation]" ) {
+TEST_CASE( "do dynamic map compile", "[IteratorTransformingOperation]" ) {
 	Range<int>(1, 5).map<std::string>([](int& elt) {
 		return new std::string(std::to_string(elt));
 	});

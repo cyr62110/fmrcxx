@@ -13,6 +13,27 @@ void IteratorTerminalOperation<T, It>::forEach(std::function<void(T&)> function)
 	}
 }
 
+template <typename T, typename It> template <typename Acc>
+Acc IteratorTerminalOperation<T, It>::reduce(Acc startValue, std::function<Acc(Acc&, const T&)> reduceFunction) {
+	It& it = *((It*) this);
+	if (it.fullyConsumed()) {
+		return startValue;
+	}
+	Acc value = reduceFunction(startValue, it.next());
+	while (!it.fullyConsumed()) {
+		value = reduceFunction(value, it.next());
+	}
+	return value;
+}
+
+template <typename T, typename It> template <typename Acc>
+void IteratorTerminalOperation<T, It>::reduce(Acc& accumulator, std::function<void(Acc&, const T&)> reduceFunction) {
+	It& it = *((It*) this);
+	while (!it.fullyConsumed()) {
+		reduceFunction(accumulator, it.next());
+	}
+}
+
 }
 
 #endif
