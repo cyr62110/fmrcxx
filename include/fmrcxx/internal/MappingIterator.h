@@ -12,15 +12,18 @@ namespace internal {
 
 /**
  * \brief Transforming iterator that will map every item in the preceding iterator into another type.
- * \tparam T
- * \tparam I
+ * \tparam T Type in which the item in the iterator will be mapped into
+ * \tparam I Type of item in iterator on which we will apply the transformation
  * \tparam It Type of the iterator on which we will apply the transformation
  * \tparam UseDynamicAlloc Select between the statically-allocated memory model or the dynamic one.
  *
+ * ## Usage
+ *
+ * FIXME
+ *
  * ## Memory Models
  *
- * As we transform an object into another, we need to answer this question:
- * Who will own the memory of the newly created object?
+ * ### Who will own the memory of the newly created object?
  *
  * The strategy chosen by the MappingIterator is that it will OWN the newly created object.
  * This strategy allow a simple memory management if we do not need to keep this object alive at
@@ -29,11 +32,32 @@ namespace internal {
  * If you want to claim this memory, well it is simple also. You just need to map to unique_ptr<T> instead of T.
  * You will be able to claim the memory from unique_ptrs at the end of the chain.
  *
+ * ### Where are stored the mapped items ?
  *
+ * You can choose between two memory model, using UseDynamicAlloc template parameter:
  *
- * ### Statically-allocated memory
+ * #### Static model
  *
- * ### Dynamically-allocated memory
+ * With this model, the object returned by the map function will be moved (by using placement new)
+ * inside memory held by the MappingIterator. The MappingIterator will also take care of calling placement delete
+ * for the moved object.
+ *
+ * Conclusion:
+ * - All memory is allocated on the head. No dynamic allocation at all.
+ * - Can only with object that can be moved.
+ * - Adapted for light object that can easily moved.
+ *
+ * #### Dynamic model
+ *
+ * With this model, the memory of the mapped object needs to be allocated inside the map function.
+ * As the MappingIterator will take the ownership of the allocated memory, you do not need to care about
+ * how this memory will be released.
+ *
+ * Conclusion:
+ * - Memory for object is allocated dynamically in the map function
+ * - Can be used will all types of object
+ * - Adapter for heavy object or object that cannot be moved.
+ *
  */
 template <typename T, typename I, typename It, bool UseDynamicAlloc>
 class MappingIterator : FMRCXX_PRIVATE TransformingIterator<T, It, MappingIterator<T, I, It, UseDynamicAlloc>> {
