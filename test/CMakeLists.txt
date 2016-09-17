@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}
 set(SOURCES
 	main.cpp
 	IteratorTest.cpp
+	FmrcxxTest.cpp
 	RangeTest.cpp
 	IteratorTerminalOperationTest.cpp
 	IteratorTransformingOperationTest.cpp
