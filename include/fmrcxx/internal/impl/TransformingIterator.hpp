@@ -1,5 +1,5 @@
-#ifndef FMRCXX_INTERNAL_TRANSFORMINGITERATOR_HPP_
-#define FMRCXX_INTERNAL_TRANSFORMINGITERATOR_HPP_
+#ifndef FMRCXX_INTERNAL_IMPL_TRANSFORMINGITERATOR_HPP_
+#define FMRCXX_INTERNAL_IMPL_TRANSFORMINGITERATOR_HPP_
 
 #include <fmrcxx/internal/TransformingIterator.h>
 #include <fmrcxx/exception/NextOperationOnFullyConsumedIteratorException.h>

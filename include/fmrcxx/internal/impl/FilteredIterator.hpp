@@ -1,5 +1,5 @@
-#ifndef FMRCXX_INTERNAL_FILTEREDITERATOR_HPP_
-#define FMRCXX_INTERNAL_FILTEREDITERATOR_HPP_
+#ifndef FMRCXX_INTERNAL_IMPL_FILTEREDITERATOR_HPP_
+#define FMRCXX_INTERNAL_IMPL_FILTEREDITERATOR_HPP_
 
 #include <fmrcxx/exception/NextOperationOnFullyConsumedIteratorException.h>
 #include <fmrcxx/internal/FilteredIterator.h>

@@ -35,6 +35,6 @@ FMRCXX_PRIVATE:
 
 }}
 
-#include <fmrcxx/internal/FilteredIterator.hpp>
+#include <fmrcxx/internal/impl/FilteredIterator.hpp>
 
 #endif

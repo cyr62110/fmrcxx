@@ -90,6 +90,6 @@ FMRCXX_PRIVATE:
 
 }}
 
-#include <fmrcxx/internal/MappingIterator.hpp>
+#include <fmrcxx/internal/impl/MappingIterator.hpp>
 
 #endif

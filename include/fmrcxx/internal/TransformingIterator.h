@@ -56,6 +56,6 @@ private:
 
 }
 
-#include <fmrcxx/internal/TransformingIterator.hpp>
+#include <fmrcxx/internal/impl/TransformingIterator.hpp>
 
 #endif
