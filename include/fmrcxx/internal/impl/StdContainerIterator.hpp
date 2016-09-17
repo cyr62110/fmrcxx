@@ -1,21 +1,20 @@
-#ifndef FMRCXX_IMPL_STDITERATOR_HPP_
-#define FMRCXX_IMPL_STDITERATOR_HPP_
-
-#include <fmrcxx/StdIterator.h>
+#ifndef FMRCXX_INTERNAL_IMPL_STDITERATOR_HPP_
+#define FMRCXX_INTERNAL_IMPL_STDITERATOR_HPP_
 
 #include <fmrcxx/exception/NextOperationOnFullyConsumedIteratorException.h>
+#include <fmrcxx/internal/StdContainerIterator.h>
 
 namespace fmrcxx {
 
 template <typename T, typename It>
-StdIterator<T, It>::StdIterator(It&& start, It&& end) :
+StdContainerIterator<T, It>::StdContainerIterator(It&& start, It&& end) :
 	Iterator<T>(),
 	current(std::move(start)),
 	end(std::move(end)) {
 }
 
 template <typename T, typename It>
-bool StdIterator<T, It>::fullyConsumed() {
+bool StdContainerIterator<T, It>::fullyConsumed() {
 	if (Iterator<T>::fullyConsumed()) {
 		return true;
 	}
@@ -23,7 +22,7 @@ bool StdIterator<T, It>::fullyConsumed() {
 }
 
 template <typename T, typename It>
-T& StdIterator<T, It>::next() {
+T& StdContainerIterator<T, It>::next() {
 	if (fullyConsumed()) {
 		throw exception::NextOperationOnFullyConsumedIteratorException();
 	}
