@@ -44,7 +44,8 @@ namespace internal {
  *
  * Conclusion:
  * - All memory is allocated on the head. No dynamic allocation at all.
- * - Can only with object that can be moved.
+ * - Can only be used with object that can be moved.
+ * - Cannot be used to map to pointer nor array.
  * - Adapted for light object that can easily moved.
  *
  * #### Dynamic model

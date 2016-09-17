@@ -27,6 +27,14 @@ public:
 	Iterator(It&& iterator);
 
 	/**
+	 * \internal
+	 * \brief Construct an iterator and its implementation. Implementation will be constructed with provided arguments.
+	 *
+	 */
+	template <typename... Args>
+	Iterator(Args&&... args);
+
+	/**
 	 * \brief Iterator cannot be copied
 	 */
 	Iterator(Iterator& iterator) = delete;

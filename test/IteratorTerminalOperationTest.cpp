@@ -5,7 +5,7 @@
 using namespace fmrcxx;
 
 
-TEST_CASE( "check forEach", "[IteratorTerminalOperationTest]" ) {
+TEST_CASE( "check forEach", "[IteratorTerminalOperation]" ) {
 	int sum = 0;
 	Range<int> range(1, 5);
 

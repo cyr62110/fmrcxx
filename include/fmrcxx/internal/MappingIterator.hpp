@@ -10,14 +10,36 @@ template <typename T, typename I, typename It, bool UseDynamicAlloc>
 class MappingIterator<T, I, It, UseDynamicAlloc>::Impl {
 public:
 	Impl(std::function<T(I&)>&& mapFunction) :
-		mapFunction(std::move(mapFunction)) {
+		mapFunction(std::move(mapFunction)),
+		hasComputedNext(false) {
 	}
 
 	Impl(Impl&& rhs) :
-		mapFunction(std::move(rhs.mapFunction)) {
+		mapFunction(std::move(rhs.mapFunction)),
+		hasComputedNext(false) {
+	}
+
+	~Impl() {
+		free();
+	}
+
+	void free() {
+		if (hasComputedNext) {
+			((T*)computeNextBytes)->~T();
+			hasComputedNext = false;
+		}
+	}
+
+	void swap(T&& item) {
+		if (hasComputedNext) {
+			free();
+		}
+		new (computeNextBytes) T(std::forward<T>(item));
+		hasComputedNext = true;
 	}
 
 	std::function<T(I&)> mapFunction;
+	bool hasComputedNext;
 	std::uint8_t computeNextBytes[sizeof(T)];
 };
 
@@ -39,7 +61,7 @@ T* MappingIterator<T, I, It, UseDynamicAlloc>::doComputeNext() {
 		return nullptr;
 	}
 	T computedNext = this->impl.mapFunction(this->iterator.next());
-	new (this->impl.computeNextBytes) T(std::move(computedNext));
+	this->impl.swap(std::move(computedNext));
 	return (T*)this->impl.computeNextBytes;
 }
 

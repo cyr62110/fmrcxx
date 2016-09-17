@@ -11,7 +11,12 @@ template <typename T, typename It>
 Iterator<T, It>::Iterator(It&& iterator) :
 	moved(false),
 	iterator(std::move(iterator)) {
+}
 
+template <typename T, typename It> template <typename... Args>
+Iterator<T, It>::Iterator(Args&&... args) :
+	moved(false),
+	iterator(std::forward<Args>(args)...) {
 }
 
 template <typename T, typename It>
