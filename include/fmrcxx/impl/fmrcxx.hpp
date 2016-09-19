@@ -13,6 +13,16 @@ StdContainerIterator<T, typename Container<T>::iterator> reverseIterateOver(Cont
 	return StdContainerIterator<T, typename Container<T>::iterator>(container.rbegin(), container.rend());
 }
 
+template <typename Key, typename Value, template <typename, typename, typename...> class MapContainer>
+StdMapIterator<Key, Value, typename MapContainer<Key, Value>::iterator> iterateOver(MapContainer<Key, Value>& container) {
+	return StdMapIterator<Key, Value, typename MapContainer<Key, Value>::iterator>(container.begin(), container.end());
+}
+
+template <typename Key, typename Value, template <typename, typename, typename...> class MapContainer>
+StdMapIterator<Key, Value, typename MapContainer<Key, Value>::iterator> reverseIterateOver(MapContainer<Key, Value>& container) {
+	return StdMapIterator<Key, Value, typename MapContainer<Key, Value>::iterator>(container.rbegin(), container.rend());
+}
+
 }
 
 #endif

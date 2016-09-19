@@ -12,6 +12,7 @@ set(SOURCES
 	IteratorTerminalOperationTest.cpp
 	IteratorTransformingOperationTest.cpp
 	internal/StdContainerIteratorTest.cpp
+	internal/StdMapIteratorTest.cpp
 	internal/TransformingIteratorTest.cpp
 	internal/FilteredIteratorTest.cpp
 	internal/MappingIteratorTest.cpp)
