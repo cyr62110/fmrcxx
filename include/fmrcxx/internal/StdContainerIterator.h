@@ -20,10 +20,17 @@ class StdContainerIterator :
 public:
 	/**
 	 * \brief Constructor that will take a begin and a end iterator
-	 * \param start Iterator to the beginning of the container
+	 * \param begin Iterator to the beginning of the container
 	 * \param end Iterator to the end of the container
 	 */
-	StdContainerIterator(It&& start, It&& end);
+	StdContainerIterator(It&& begin, It&& end);
+
+	StdContainerIterator(StdContainerIterator& rhs) = delete;
+
+	/**
+	 * \brief Move constructor
+	 */
+	StdContainerIterator(StdContainerIterator&& rhs);
 
 	bool fullyConsumed();
 
