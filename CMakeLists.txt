@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project ("FMRCXX library" CXX)
 
-# Project written in C++14
-set (CMAKE_CXX_STANDARD 14)
+# Project written in C++11
+set (CMAKE_CXX_STANDARD 11)
 
 # Output directories
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
