@@ -8,7 +8,7 @@ namespace fmrcxx {
 
 template <typename Key, typename Value, typename It>
 StdMapIterator<Key, Value, It>::StdMapIterator(It&& begin, It&& end) :
-	Iterator<Tuple<Key&, Value&>>(),
+	Iterator<Tuple<const Key&, Value&>>(),
 	current(std::move(begin)),
 	end(std::move(end)),
 	first(true) {
@@ -16,7 +16,7 @@ StdMapIterator<Key, Value, It>::StdMapIterator(It&& begin, It&& end) :
 
 template <typename Key, typename Value, typename It>
 StdMapIterator<Key, Value, It>::StdMapIterator(StdMapIterator<Key, Value, It>&& rhs) :
-	Iterator<Tuple<Key&, Value&>>(std::move(rhs)),
+	Iterator<Tuple<const Key&, Value&>>(std::move(rhs)),
 	current(std::move(rhs.current)),
 	end(std::move(rhs.end)),
 	first(true) {
@@ -24,24 +24,26 @@ StdMapIterator<Key, Value, It>::StdMapIterator(StdMapIterator<Key, Value, It>&& 
 
 template <typename Key, typename Value, typename It>
 bool StdMapIterator<Key, Value, It>::fullyConsumed() {
-	if (Iterator<Tuple<Key&, Value&>>::fullyConsumed()) {
+	if (Iterator<Tuple<const Key&, Value&>>::fullyConsumed()) {
 		return true;
 	}
-	return this->current != this->end;
+	return this->current == this->end;
 }
 
 template <typename Key, typename Value, typename It>
-Tuple<Key&, Value&>& StdMapIterator<Key, Value, It>::next() {
+Tuple<const Key&, Value&>& StdMapIterator<Key, Value, It>::next() {
 	if (this->fullyConsumed()) {
 		throw exception::NextOperationOnFullyConsumedIteratorException();
 	}
 	if (!this->first) {
 		((Tuple<Key&, Value&>*)this->pTuple)->~Tuple();
 	}
-	new (this->pTuple) Tuple<Key&, Value&>(this->current->first, this->current->second);
+	const Key& key = this->current->first;
+	Value& value = this->current->second;
+	new (this->pTuple) Tuple<const Key&, Value&>(key, value);
 	this->current ++;
 	this->first = false;
-	return *(Tuple<Key&, Value&>*)this->pTuple;
+	return *(Tuple<const Key&, Value&>*)this->pTuple;
 }
 
 }

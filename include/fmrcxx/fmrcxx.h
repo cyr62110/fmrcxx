@@ -7,17 +7,17 @@
 
 namespace fmrcxx {
 
-template <typename T, template <typename, typename...> class Container>
-StdContainerIterator<T, typename Container<T>::iterator> iterateOver(Container<T>& container);
+template <typename T, template <typename...> class Container, typename... TTs>
+StdContainerIterator<T, typename Container<T, TTs...>::iterator> iterateOver(Container<T, TTs...>& container);
 
-template <typename T, template <typename, typename... Others> class Container>
+template <typename T, template <typename... Others> class Container, typename... TTs>
 StdContainerIterator<T, typename Container<T>::iterator> reverseIterateOver(Container<T>& container);
 
-template <typename Key, typename Value, template <typename, typename, typename...> class MapContainer>
-StdMapIterator<Key, Value, typename MapContainer<Key, Value>::iterator> iterateOver(MapContainer<Key, Value>& container);
+template <typename Key, typename Value, template <typename...> class MapContainer, typename... TTs>
+StdMapIterator<Key, Value, typename MapContainer<Key, Value, TTs...>::iterator> iterateOverMap(MapContainer<Key, Value, TTs...>& container);
 
-template <typename Key, typename Value, template <typename, typename, typename...> class MapContainer>
-StdMapIterator<Key, Value, typename MapContainer<Key, Value>::iterator> reverseIterateOver(MapContainer<Key, Value>& container);
+template <typename Key, typename Value, template <typename...> class MapContainer, typename... TTs>
+StdMapIterator<Key, Value, typename MapContainer<Key, Value, TTs...>::iterator> reverseIterateOverMap(MapContainer<Key, Value, TTs...>& container);
 
 }
 

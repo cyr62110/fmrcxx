@@ -8,9 +8,9 @@ namespace fmrcxx {
 
 template <typename Key, typename Value, typename It>
 class StdMapIterator :
-		public Iterator<Tuple<Key&, Value&>>,
-		public IteratorTransformingOperation<Tuple<Key&, Value&>, Iterator, StdMapIterator<Key, Value, It>>,
-		public IteratorTerminalOperation<Tuple<Key&, Value&>, StdMapIterator<Key, Value, It>> {
+		public Iterator<Tuple<const Key&, Value&>>,
+		public IteratorTransformingOperation<Tuple<const Key&, Value&>, Iterator, StdMapIterator<Key, Value, It>>,
+		public IteratorTerminalOperation<Tuple<const Key&, Value&>, StdMapIterator<Key, Value, It>> {
 public:
 	/**
 	 * \brief Constructor that will take a begin and a end iterator
@@ -28,7 +28,7 @@ public:
 
 	bool fullyConsumed();
 
-	Tuple<Key&, Value&>& next();
+	Tuple<const Key&, Value&>& next();
 private:
 	It current;
 	It end;
