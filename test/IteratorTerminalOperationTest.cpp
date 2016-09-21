@@ -4,6 +4,11 @@
 
 using namespace fmrcxx;
 
+TEST_CASE( "check count", "[IteratorTerminalOperation]" ) {
+	Range<int> range(1, 5);
+	REQUIRE( range.count() == 5 );
+}
+
 TEST_CASE( "check forEach", "[IteratorTerminalOperation]" ) {
 	int sum = 0;
 	Range<int> range(1, 5);

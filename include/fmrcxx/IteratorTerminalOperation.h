@@ -12,6 +12,11 @@ template <typename T, typename It>
 class IteratorTerminalOperation {
 public:
 	/**
+	 * \brief Return the number of item in the iterator
+	 */
+	unsigned long count();
+
+	/**
 	 * \brief Run the function passed in parameter for each element in the iterator.
 	 */
 	void forEach(std::function<void(T&)> function);

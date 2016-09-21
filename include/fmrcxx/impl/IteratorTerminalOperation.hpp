@@ -6,6 +6,16 @@
 namespace fmrcxx {
 
 template <typename T, typename It>
+unsigned long IteratorTerminalOperation<T, It>::count() {
+	unsigned long count = 0;
+	It& it = *((It*) this);
+	for (count = 0; !it.fullyConsumed(); count++) {
+		it.next();
+	}
+	return count;
+}
+
+template <typename T, typename It>
 void IteratorTerminalOperation<T, It>::forEach(std::function<void(T&)> function) {
 	It& it = *((It*) this);
 	while (!it.fullyConsumed()) {
