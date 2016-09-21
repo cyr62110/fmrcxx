@@ -4,7 +4,6 @@
 namespace fmrcxx {
 
 /**
- * \internal
  * \brief Base class for all iterator that apply any kind of transformation on another iterator.
  * \tparam T Type of element contained in the collection we iterate over
  * \tparam It Type of the iterator on which we will apply the transformation
@@ -13,6 +12,13 @@ namespace fmrcxx {
  * A TransformingIterator can either:
  * - transforms the element from the preceding iterator into another type.
  * - transforms the iterator by sorting, filtering, etc. elements.
+ *
+ * ## Lazy
+ *
+ * By design, all transforming operations are lazy. Nothing is computed until next() or fullyConsumed() are
+ * called.
+ *
+ * ## Writing your own TransformingIterator
  *
  * To create a transforming iterator, you new iterator must extends this class.
  * In addition to override the two constructors, the new iterator will need to define the following function:
