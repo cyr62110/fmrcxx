@@ -20,8 +20,8 @@ namespace fmrcxx {
  *
  * ## Lazy
  *
- * Due to the lazy nature of Iterator and transforming operation on it, all actual operation are actually
- * executed when a terminal operation is called.
+ * Due to the lazy nature of Iterator and transforming operation on it, all tranformation are applied
+ * on the iterator
  */
 template <typename T, typename It>
 class IteratorTerminalOperation {
