@@ -1,6 +1,8 @@
 #ifndef FMRCXX_ITERATORARITHMETICTERMINALOPERATION_H_
 #define FMRCXX_ITERATORARITHMETICTERMINALOPERATION_H_
 
+#include <fmrcxx/SummaryStats.h>
+
 namespace fmrcxx {
 
 /**
@@ -23,7 +25,13 @@ public:
 	/**
 	 * \brief Return the sum of all items in the iterator.
 	 */
-	T sum();
+	template <typename ST = T>
+	ST sum();
+
+	/**
+	 * \brief Return summary statistics of all item in the iterator.
+	 */
+	SummaryStats stats();
 };
 
 }
