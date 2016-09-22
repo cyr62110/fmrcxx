@@ -4,6 +4,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_FMRCXX_TESTING") # Allow us to test p
 
 set(SOURCES
 	main.cpp
+	SummaryStatsTest.cpp
 	IteratorTest.cpp
 	FmrcxxTest.cpp
 	RangeTest.cpp
