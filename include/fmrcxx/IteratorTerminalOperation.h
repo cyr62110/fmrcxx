@@ -6,6 +6,8 @@
 #include <vector>
 #include <map>
 
+#include <fmrcxx/IteratorArithmeticTerminalOperation.h>
+
 namespace fmrcxx {
 
 /**
@@ -24,7 +26,8 @@ namespace fmrcxx {
  * on the iterator
  */
 template <typename T, typename It>
-class IteratorTerminalOperation {
+class IteratorTerminalOperation :
+	public IteratorArithmeticTerminalOperation<T, It> {
 public:
 	/**
 	 * \brief Return the number of item in the iterator
