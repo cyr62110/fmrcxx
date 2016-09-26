@@ -4,7 +4,7 @@
 class LightTestObject {
 public:
 	LightTestObject(int value);
-	LightTestObject(LightTestObject& rhs);
+	LightTestObject(const LightTestObject& rhs);
 	LightTestObject(LightTestObject&& rhs);
 
 	~LightTestObject();
@@ -16,6 +16,8 @@ public:
 	static int nbTimeDestructorCalled;
 
 	static void resetCounters();
+
+	int getValue() const;
 private:
 	int value;
 };

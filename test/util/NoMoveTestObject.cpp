@@ -4,7 +4,7 @@ NoMoveTestObject::NoMoveTestObject(int value) :
 	value(value) {
 }
 
-NoMoveTestObject::NoMoveTestObject(NoMoveTestObject& rhs) :
+NoMoveTestObject::NoMoveTestObject(const NoMoveTestObject& rhs) :
 	value(rhs.value) {
 }
 

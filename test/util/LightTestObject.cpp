@@ -10,7 +10,7 @@ LightTestObject::LightTestObject(int value) :
 	nbTimeConstructorCalled ++;
 }
 
-LightTestObject::LightTestObject(LightTestObject& rhs) :
+LightTestObject::LightTestObject(const LightTestObject& rhs) :
 	value(rhs.value) {
 	nbTimeCopyConstructorCalled ++;
 }
@@ -22,6 +22,10 @@ LightTestObject::LightTestObject(LightTestObject&& rhs) :
 
 LightTestObject::~LightTestObject() {
 	nbTimeDestructorCalled ++;
+}
+
+int LightTestObject::getValue() const {
+	return this->value;
 }
 
 void LightTestObject::resetCounters() {

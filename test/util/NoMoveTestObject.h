@@ -4,7 +4,7 @@
 class NoMoveTestObject {
 public:
 	NoMoveTestObject(int value);
-	NoMoveTestObject(NoMoveTestObject& rhs);
+	NoMoveTestObject(const NoMoveTestObject& rhs);
 	NoMoveTestObject(NoMoveTestObject&& rhs) = delete;
 
 	int getValue();
