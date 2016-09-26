@@ -2,6 +2,7 @@
 #define FMRCXX_IMPL_ITERATORTERMINALOPERATION_H_
 
 #include <fmrcxx/IteratorTerminalOperation.h>
+#include <fmrcxx/exception/UnsupportedContainerTypeException.h>
 
 namespace fmrcxx {
 
@@ -42,6 +43,36 @@ void IteratorTerminalOperation<T, It>::reduce(Acc& accumulator, std::function<vo
 	while (!it.fullyConsumed()) {
 		reduceFunction(accumulator, it.next());
 	}
+}
+
+template <typename T, typename It> template <template <typename...> class Container, typename... TPs>
+Container<T, TPs...> IteratorTerminalOperation<T, It>::to() {
+	Container<T, TPs...> container;
+	internalTo(container);
+	return container;
+}
+
+template <typename T, typename It> template <template <typename...> class Container, typename... TPs>
+void IteratorTerminalOperation<T, It>::internalTo(Container<T, TPs...>& container) {
+	throw exception::UnsupportedContainerTypeException();
+}
+
+template <typename T, typename It> template <typename... TPs>
+void IteratorTerminalOperation<T, It>::internalTo(std::vector<T, TPs...>& container) {
+	It& it = *((It*) this);
+	while (!it.fullyConsumed()) {
+		container.emplace_back(std::move(it.next()));
+	}
+}
+
+template <typename T, typename It> template <template <typename...> class Container, typename... TPs>
+Container<T*, TPs...> IteratorTerminalOperation<T, It>::copyTo() {
+	It& it = *((It*) this);
+	Container<T*, TPs...> container;
+
+	// FIXME Implements
+
+	return container;
 }
 
 }

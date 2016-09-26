@@ -12,12 +12,12 @@ Tuple<Key, Value>::Tuple(Key key, Value value) :
 }
 
 template <typename Key, typename Value>
-Key Tuple<Key, Value>::getKey() {
+Key Tuple<Key, Value>::getKey() const {
 	return this->key;
 }
 
 template <typename Key, typename Value>
-Value Tuple<Key, Value>::getValue() {
+Value Tuple<Key, Value>::getValue() const {
 	return this->value;
 }
 

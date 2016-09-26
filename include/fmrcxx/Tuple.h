@@ -17,12 +17,12 @@ public:
 	/**
 	 * \brief Return the key
 	 */
-	Key getKey();
+	Key getKey() const;
 
 	/**
 	 * \brief Return the value
 	 */
-	Value getValue();
+	Value getValue() const;
 private:
 	Key key;
 	Value value;
