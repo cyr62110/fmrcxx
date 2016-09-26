@@ -1,6 +1,11 @@
 #include "catch.hpp"
 
+#include <list>
+
 #include <fmrcxx/Range.h>
+#include <fmrcxx/exception/UnsupportedContainerTypeException.h>
+
+#include "util/LightTestObject.h"
 
 using namespace fmrcxx;
 
@@ -35,5 +40,24 @@ TEST_CASE( "check reduce with Acc&", "[IteratorTerminalOperation]" ) {
 	});
 
 	REQUIRE ( sum == 15 );
+}
+
+TEST_CASE( "check to unsupported container type", "[IteratorTerminalOperation]" ) {
+	std::function<void(void)> fn = []() {
+		Range<int>(1, 5).to<std::map, int>();
+	};
+	REQUIRE_THROWS_AS( fn(), exception::UnsupportedContainerTypeException );
+}
+
+TEST_CASE( "check to std::vector", "[IteratorTerminalOperation]" ) {
+	LightTestObject::resetCounters();
+
+	std::vector<LightTestObject> items = Range<int>(1, 5).map<LightTestObject>([](int& elt) {
+		return LightTestObject(elt);
+	}).to<std::vector>();
+
+	REQUIRE( items.size() == 5 );
+	REQUIRE( items[2].getValue() == 3 );
+	REQUIRE( LightTestObject::nbTimeMoveConstructorCalled >= 10 );
 }
 

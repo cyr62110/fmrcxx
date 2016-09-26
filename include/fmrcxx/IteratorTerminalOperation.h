@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 
+#include <fmrcxx/IteratorMapTerminalOperation.h>
 #include <fmrcxx/IteratorArithmeticTerminalOperation.h>
 
 namespace fmrcxx {
@@ -27,6 +28,7 @@ namespace fmrcxx {
  */
 template <typename T, typename It>
 class IteratorTerminalOperation :
+	public IteratorMapTerminalOperation<T, It>,
 	public IteratorArithmeticTerminalOperation<T, It> {
 public:
 	/**
@@ -62,6 +64,51 @@ public:
 	 *
 	 */
 	//FIXME Optional<T> first();
+
+	/**
+	 * \brief Move all items in the iterator into a new container.
+	 * \tparam Container Type of the container in which the item will be stored.
+	 * \tparam TPs Other template params of the container.
+	 *
+	 * ## Constraints
+	 *
+	 * - Container must provide a default constructor.
+	 * - T must provide a move constructor.
+	 *
+	 * ## Memory model
+	 *
+	 * All items will be move-constructed inside the container. The ownership of
+	 * the original objects will therefore not be modified.
+	 */
+	template <template <typename...> class Container, typename... TPs>
+	Container<T, TPs...> to();
+
+	/**
+	 * \brief Copy all items in the iterator into a new container.
+	 * \tparam Container Type of the container in which the item will be stored.
+	 * \tparam TPs Other template params of the container.
+	 *
+	 * ## Constraints
+	 *
+	 * - Container must provide a default constructor.
+	 * - T must provide a copy constructor.
+	 *
+	 * ## Memory model
+	 *
+	 * This operation will claim ownership of all memory dynamically allocated inside iterators.
+	 * If the item memory has not been dynamically allocated or if the memory is not owned by
+	 * the iterator, the item will be copied into newly dynamically allocated memory.
+	 *
+	 */
+	template <template <typename...> class Container, typename... TPs>
+	Container<T*, TPs...> copyTo();
+
+private:
+	template <template <typename...> class Container, typename... TPs>
+	void internalTo(Container<T, TPs...>& container);
+	template <typename... TPs>
+	void internalTo(std::vector<T, TPs...>& vector);
+	// FIXME Implements for all std containers: list, set, etc...
 };
 
 }
