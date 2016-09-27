@@ -6,6 +6,7 @@
 
 #include <fmrcxx/internal/FilteredIterator.h>
 #include <fmrcxx/internal/MappingIterator.h>
+#include <fmrcxx/internal/LimitingIterator.h>
 
 namespace fmrcxx {
 
@@ -27,6 +28,8 @@ public:
 
 	template <typename O>
 	ResultIt<O, internal::MappingIterator<O, T, BaseIt, true>> map(std::function<O*(T&)> mapFunction);
+
+	ResultIt<T, internal::LimitingIterator<T, BaseIt>> limit(std::uint32_t limit);
 };
 
 }

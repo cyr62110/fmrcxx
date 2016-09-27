@@ -20,6 +20,11 @@ ResultIt<O, internal::MappingIterator<O, T, BaseIt, true>> IteratorTransformingO
 	return ResultIt<O, internal::MappingIterator<O, T, BaseIt, true>>(std::move(mapFunction), std::move(*static_cast<BaseIt*>(this)));
 }
 
+template <typename T, template<typename, typename> class ResultIt, typename BaseIt>
+ResultIt<T, internal::LimitingIterator<T, BaseIt>> limit(std::uint32_t limit) {
+	return ResultIt<T, internal::LimitingIterator<T, BaseIt>>(limit, std::move(*static_cast<BaseIt*>(this)));
+}
+
 }
 
 #endif
