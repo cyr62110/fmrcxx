@@ -14,9 +14,9 @@ public:
 	SkippingIterator(std::uint32_t skip, It&& iterator);
 
 	SkippingIterator(SkippingIterator&& rhs);
-
-	// FIXME Since skip is particular operation, need to override fullyConsumed and next directly
 private:
+	T* doComputeNext();
+
 	std::uint32_t current;
 	std::uint32_t skip;
 };
