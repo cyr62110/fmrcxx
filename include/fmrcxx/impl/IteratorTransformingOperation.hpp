@@ -21,7 +21,7 @@ ResultIt<O, internal::MappingIterator<O, T, BaseIt, true>> IteratorTransformingO
 }
 
 template <typename T, template<typename, typename> class ResultIt, typename BaseIt>
-ResultIt<T, internal::LimitingIterator<T, BaseIt>> limit(std::uint32_t limit) {
+ResultIt<T, internal::LimitingIterator<T, BaseIt>> IteratorTransformingOperation<T, ResultIt, BaseIt>::limit(std::uint32_t limit) {
 	return ResultIt<T, internal::LimitingIterator<T, BaseIt>>(limit, std::move(*static_cast<BaseIt*>(this)));
 }
 
