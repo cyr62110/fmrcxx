@@ -25,6 +25,11 @@ ResultIt<T, internal::LimitingIterator<T, BaseIt>> IteratorTransformingOperation
 	return ResultIt<T, internal::LimitingIterator<T, BaseIt>>(limit, std::move(*static_cast<BaseIt*>(this)));
 }
 
+template <typename T, template<typename, typename> class ResultIt, typename BaseIt>
+ResultIt<T, internal::SkippingIterator<T, BaseIt>> IteratorTransformingOperation<T, ResultIt, BaseIt>::skip(std::uint32_t skip) {
+	return ResultIt<T, internal::SkippingIterator<T, BaseIt>>(skip, std::move(*static_cast<BaseIt*>(this)));
+}
+
 }
 
 #endif
