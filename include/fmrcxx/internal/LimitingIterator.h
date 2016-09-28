@@ -9,6 +9,16 @@
 namespace fmrcxx {
 namespace internal {
 
+/**
+ * \brief Transforming iterator that will limit the number of item that will return the iterator
+ * \tparam T Type of item in iterator on which we will apply the transformation
+ * \tparam It It Type of the iterator on which we will apply the transformation
+ *
+ * ## Memory model
+ *
+ * This transformation will not claim the ownership of ANY item.
+ *
+ */
 template <typename T, typename It>
 class LimitingIterator : public TransformingIterator<T, It, LimitingIterator<T, It>> {
 public:

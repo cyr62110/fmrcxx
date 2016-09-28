@@ -8,6 +8,16 @@
 namespace fmrcxx {
 namespace internal {
 
+/**
+ * \brief Transforming iterator that will skip the first n item from the preceding iterator.
+ * \tparam T Type of item in iterator on which we will apply the transformation
+ * \tparam It It Type of the iterator on which we will apply the transformation
+ *
+ * ## Memory model
+ *
+ * This transformation will not claim the ownership of ANY item.
+ *
+ */
 template <typename T, typename It>
 class SkippingIterator : TransformingIterator<T, It, SkippingIterator<T, It>> {
 public:
