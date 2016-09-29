@@ -51,6 +51,27 @@ T* TransformingIterator<T, It, TIt>::computeNext() {
 	return this->computedNext;
 }
 
+template <typename T, typename It, typename TIt>
+bool TransformingIterator<T, It, TIt>::ownItem() {
+	if (this->moved) {
+		return false;
+	}
+	return this->iterator.ownItem();
+}
+
+template <typename T, typename It, typename TIt>
+bool TransformingIterator<T, It, TIt>::areItemAllocatedDynamically() {
+	if (this->moved) {
+		return false;
+	}
+	return this->iterator.areItemAllocatedDynamically();
+}
+
+template <typename T, typename It, typename TIt>
+void TransformingIterator<T, It, TIt>::releaseOwnership() {
+	// FIXME Check if next has been computed.
+	this->iterator.releaseOwnership();
+}
 
 }
 

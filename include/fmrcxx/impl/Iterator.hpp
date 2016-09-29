@@ -39,6 +39,30 @@ bool Iterator<T, It>::fullyConsumed() {
 	return this->iterator.fullyConsumed();
 }
 
+template <typename T, typename It>
+bool Iterator<T, It>::ownItem() {
+	if (this->moved) {
+		return false;
+	}
+	return this->iterator.ownItem();
+}
+
+template <typename T, typename It>
+bool Iterator<T, It>::areItemAllocatedDynamically() {
+	if (this->moved) {
+		return false;
+	}
+	return this->iterator.areItemAllocatedDynamically();
+}
+
+template <typename T, typename It>
+void Iterator<T, It>::releaseOwnership() {
+	if (this->moved) {
+		return;
+	}
+	return this->iterator.releaseOwnership();
+}
+
 template <typename T>
 class Iterator<T, std::nullptr_t> {
 public:
@@ -57,6 +81,18 @@ public:
 
 	bool fullyConsumed() {
 		return this->moved;
+	}
+
+	bool ownItem() {
+		return false;
+	}
+
+	bool areItemAllocatedDynamically() {
+		return false;
+	}
+
+	void releaseOwnership() {
+		// Nothing to do here since the iterator does not own the items.
 	}
 private:
 	bool moved;

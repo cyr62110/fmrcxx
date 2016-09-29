@@ -54,6 +54,27 @@ public:
 	 */
 	T& next();
 
+	/**
+	 * \brief Return true if the memory of the next object has been allocated by the iterator.
+	 */
+	bool ownItem();
+
+	/**
+	 * \brief Return true if the memory of the 'next object has been allocated dynamically.
+	 */
+	bool areItemAllocatedDynamically();
+
+	/**
+	 * \brief Release the ownership of the last object retrieved through next.
+	 *
+	 * Once the ownership has been released, it is up to you to delete the memory
+	 * allocated for the item.
+	 *
+	 * If the iterator does not own the item or the item are not dynamically allocation,
+	 * this method will have no effect.
+	 */
+	void releaseOwnership();
+
 private:
 	bool moved;
 	It iterator;

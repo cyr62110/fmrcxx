@@ -42,6 +42,11 @@ T& Range<T>::next() {
 	return this->previous;
 }
 
+template <typename T>
+bool Range<T>::ownItem() {
+	return true;
+}
+
 }
 
 #endif

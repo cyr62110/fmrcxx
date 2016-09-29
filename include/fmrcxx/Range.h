@@ -19,6 +19,8 @@ public:
 
 	bool fullyConsumed();
 	T& next();
+
+	bool ownItem();
 private:
 	T previous;
 	T current;

@@ -33,7 +33,7 @@ class TransformingIterator {
 public:
 	/**
 	 * \brief
-	 * \param iterator Iterator on which the transformation will be applied.
+	 * \param iterator Iterator on which the transformation will be applied. It will be refered as preceding iterator in the whole documentation.
 	 */
 	TransformingIterator(It&& iterator);
 
@@ -45,6 +45,40 @@ public:
 	bool fullyConsumed();
 
 	T& next();
+
+	/**
+	 * \brief Return true if the memory of the next object has been allocated by the iterator.
+	 *
+	 * By default, it will forward the call to the preceding iterator. This function must
+	 * be overridden if this transforming iterator changes the ownership (basically if it
+	 * allocates item instead of forwarding them from the preceding iterator).
+	 */
+	bool ownItem();
+
+	/**
+	 * \brief Return true if the memory of the 'next object has been allocated dynamically.
+	 *
+	 * By default, it will forward the call to the preceding iterator. This function must
+	 * be overridden if this transforming iterator changes the ownership (basically if it
+	 * allocates item instead of forwarding them from the preceding iterator).
+	 */
+	bool areItemAllocatedDynamically();
+
+	/**
+	 * \brief Release the ownership of the last object retrieved through next.
+	 *
+	 * Once the ownership has been released, it is up to you to delete the memory
+	 * allocated for the item.
+	 *
+	 * If the iterator does not own the item or the item are not dynamically allocation,
+	 * this method will have no effect.
+	 *
+	 * By default, it will forward the call to the preceding iterator. This function must
+	 * be overridden if this transforming iterator changes the ownership (basically if it
+	 * allocates item instead of forwarding them from the preceding iterator).
+	 */
+	void releaseOwnership();
+
 protected:
 	It iterator;
 

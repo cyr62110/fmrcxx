@@ -6,6 +6,16 @@
 using namespace fmrcxx;
 using namespace fmrcxx::internal;
 
+TEST_CASE( "Will forward ownership attribute of the preceding iterator", "[TransformingIteratorTest]" ) {
+	Range<int> range1(1, 5);
+	FilteredIterator<int, Range<int>> it1([](const int& elt) {
+		return elt % 2 == 0;
+	}, std::move(range1));
+
+	REQUIRE( it1.ownItem() );
+	REQUIRE_FALSE( it1.areItemAllocatedDynamically() );
+}
+
 TEST_CASE( "TransformingIteratorTest fullyConsumed", "[TransformingIteratorTest]" ) {
 	Range<int> range1(1, 5);
 	FilteredIterator<int, Range<int>> it1([](const int& elt) {
