@@ -30,6 +30,11 @@ ResultIt<T, internal::SkippingIterator<T, BaseIt>> IteratorTransformingOperation
 	return ResultIt<T, internal::SkippingIterator<T, BaseIt>>(skip, std::move(*static_cast<BaseIt*>(this)));
 }
 
+template <typename T, template<typename, typename> class ResultIt, typename BaseIt>
+ResultIt<T, internal::EachingIterator<T, BaseIt>> IteratorTransformingOperation<T, ResultIt, BaseIt>::each(std::function<void(T&)> eachFunction) {
+	return ResultIt<T, internal::EachingIterator<T, BaseIt>>(std::move(eachFunction), std::move(*static_cast<BaseIt*>(this)));
+}
+
 }
 
 #endif

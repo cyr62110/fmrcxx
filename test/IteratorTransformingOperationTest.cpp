@@ -32,3 +32,7 @@ TEST_CASE( "do limit compile", "[IteratorTransformingOperation]" ) {
 TEST_CASE( "do skip compile", "[IteratorTransformingOperation]" ) {
 	Range<int>(1, 5).skip(1);
 }
+
+TEST_CASE( "do each compile", "[IteratorTransformingOperation]" ) {
+	Range<int>(1, 5).each([](int& elt) {});
+}

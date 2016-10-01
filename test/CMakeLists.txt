@@ -19,6 +19,7 @@ set(SOURCES
 	internal/MappingIteratorTest.cpp
 	internal/LimitingIteratorTest.cpp
 	internal/SkippingIteratorTest.cpp
+	internal/EachingIteratorTest.cpp)
 	
 set(UTIL_SOURCES
 	util/LightTestObject.cpp
