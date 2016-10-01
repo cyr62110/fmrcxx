@@ -37,6 +37,37 @@ Acc IteratorTerminalOperation<T, It>::reduce(Acc startValue, std::function<Acc(A
 	return value;
 }
 
+template <typename T, typename It>
+bool IteratorTerminalOperation<T, It>::allMatch(std::function<bool(const T&)> condition) {
+	It& it = *((It*) this);
+	if (it.fullyConsumed()) {
+		throw exception::OperationOnFullyConsumedIteratorException();
+	}
+	bool result = true;
+	while (result && !it.fullyConsumed()) {
+		result = condition(it.next());
+	}
+	return result;
+}
+
+template <typename T, typename It>
+bool IteratorTerminalOperation<T, It>::anyMatch(std::function<bool(const T&)> condition) {
+	It& it = *((It*) this);
+	if (it.fullyConsumed()) {
+		throw exception::OperationOnFullyConsumedIteratorException();
+	}
+	bool result = false;
+	while (!result && !it.fullyConsumed()) {
+		result = condition(it.next());
+	}
+	return result;
+}
+
+template <typename T, typename It>
+bool IteratorTerminalOperation<T, It>::noneMatch(std::function<bool(const T&)> condition) {
+	return !anyMatch(std::move(condition));
+}
+
 template <typename T, typename It> template <typename Acc>
 void IteratorTerminalOperation<T, It>::reduce(Acc& accumulator, std::function<void(Acc&, const T&)> reduceFunction) {
 	It& it = *((It*) this);

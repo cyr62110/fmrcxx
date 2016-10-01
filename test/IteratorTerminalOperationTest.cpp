@@ -4,6 +4,7 @@
 
 #include <fmrcxx/Range.h>
 #include <fmrcxx/exception/UnsupportedContainerTypeException.h>
+#include <fmrcxx/exception/OperationOnFullyConsumedIteratorException.h>
 
 #include "util/LightTestObject.h"
 
@@ -40,6 +41,55 @@ TEST_CASE( "check reduce with Acc&", "[IteratorTerminalOperation]" ) {
 	});
 
 	REQUIRE ( sum == 15 );
+}
+
+TEST_CASE( "check all match", "[IteratorTerminalOperation]" ) {
+	int nb = 0;
+	bool result = Range<int>(1, 5).allMatch([&nb](const int& elt) {
+		return elt == ++nb;
+	});
+	REQUIRE ( result );
+
+	result = Range<int>(1, 5).allMatch([](const int& elt) {
+		return elt == 1;
+	});
+	REQUIRE_FALSE( result );
+}
+
+TEST_CASE( "check all match throw if iterator fully consumed", "[IteratorTerminalOperation]" ) {
+	REQUIRE_THROWS_AS ( Range<int>(1, 0).allMatch([](const int& elt) { return false; }), exception::OperationOnFullyConsumedIteratorException );
+}
+
+TEST_CASE( "check any match", "[IteratorTerminalOperation]" ) {
+	bool result = Range<int>(1, 5).anyMatch([](const int& elt) {
+		return elt == 2;
+	});
+	REQUIRE ( result );
+
+	result = Range<int>(1, 5).anyMatch([](const int& elt) {
+		return elt == 6;
+	});
+	REQUIRE_FALSE( result );
+}
+
+TEST_CASE( "check any match throw if iterator fully consumed", "[IteratorTerminalOperation]" ) {
+	REQUIRE_THROWS_AS ( Range<int>(1, 0).anyMatch([](const int& elt) { return false; }), exception::OperationOnFullyConsumedIteratorException );
+}
+
+TEST_CASE( "check none match", "[IteratorTerminalOperation]" ) {
+	bool result = Range<int>(1, 5).noneMatch([](const int& elt) {
+		return elt == 6;
+	});
+	REQUIRE ( result );
+
+	result = Range<int>(1, 5).noneMatch([](const int& elt) {
+		return elt == 1;
+	});
+	REQUIRE_FALSE( result );
+}
+
+TEST_CASE( "check none match throw if iterator fully consumed", "[IteratorTerminalOperation]" ) {
+	REQUIRE_THROWS_AS ( Range<int>(1, 0).noneMatch([](const int& elt) { return false; }), exception::OperationOnFullyConsumedIteratorException );
 }
 
 TEST_CASE( "check to unsupported container type", "[IteratorTerminalOperation]" ) {

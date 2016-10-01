@@ -66,6 +66,21 @@ public:
 	//FIXME Optional<T> first();
 
 	/**
+	 * \brief Return true if all items in the iterator match the condition.
+	 */
+	bool allMatch(std::function<bool(const T&)> condition);
+
+	/**
+	 * \brief Return true if any item in the iterator match the condition.
+	 */
+	bool anyMatch(std::function<bool(const T&)> condition);
+
+	/**
+	 * \brief Return true if no item in the iterator match the condition.
+	 */
+	bool noneMatch(std::function<bool(const T&)> condition);
+
+	/**
 	 * \brief Move all items in the iterator into a new container.
 	 * \tparam Container Type of the container in which the item will be stored.
 	 * \tparam TPs Other template params of the container.
