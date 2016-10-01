@@ -11,7 +11,7 @@ namespace internal {
 
 /**
  * \brief Transforming that will filter item according to the result of a function.
- * \tparam T Type of item in iterator on which we will apply the transformation
+ * \tparam T Type of item in the iterator on which we will apply the transformation
  * \tparam It It Type of the iterator on which we will apply the transformation
  *
  * ## Memory model
