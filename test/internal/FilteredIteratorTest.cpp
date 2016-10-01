@@ -12,4 +12,6 @@ TEST_CASE( "FilteredIterator doComputeNext", "[FilteredIterator]" ) {
 		return elt % 2 == 0;
 	}, std::move(range1));
 	REQUIRE( *(it.doComputeNext()) == 2 );
+	REQUIRE( *(it.doComputeNext()) == 4 );
+	REQUIRE( it.doComputeNext() == nullptr );
 }
