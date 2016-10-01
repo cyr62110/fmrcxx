@@ -33,3 +33,5 @@ T* SkippingIterator<T, It>::doComputeNext() {
 }
 
 }}
+
+#endif

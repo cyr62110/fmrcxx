@@ -24,3 +24,11 @@ TEST_CASE( "do dynamic map compile", "[IteratorTransformingOperation]" ) {
 		return new std::string(std::to_string(elt));
 	});
 }
+
+TEST_CASE( "do limit compile", "[IteratorTransformingOperation]" ) {
+	Range<int>(1, 5).limit(1);
+}
+
+TEST_CASE( "do skip compile", "[IteratorTransformingOperation]" ) {
+	Range<int>(1, 5).skip(1);
+}
