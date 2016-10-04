@@ -89,6 +89,12 @@ MappingIterator<T, I, It, true>::MappingIterator(std::function<T*(I&)> mapFuncti
 }
 
 template <typename T, typename I, typename It>
+MappingIterator<T, I, It, true>::MappingIterator(MappingIterator<T, I, It, true>&& rhs) :
+	TransformingIterator<T, It, MappingIterator<T, I, It, true>>(std::move(rhs)),
+	impl(std::move(rhs.impl)) {
+}
+
+template <typename T, typename I, typename It>
 T* MappingIterator<T, I, It, true>::doComputeNext() {
 	if (this->iterator.fullyConsumed()) {
 		return nullptr;
