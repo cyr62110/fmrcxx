@@ -2,6 +2,7 @@
 #define FMRCXX_FMRCXX_H_
 
 #include <fmrcxx/Iterator.h>
+#include <fmrcxx/Range.h>
 #include <fmrcxx/internal/StdMapIterator.h>
 #include <fmrcxx/internal/StdContainerIterator.h>
 
