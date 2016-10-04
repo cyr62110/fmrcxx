@@ -35,6 +35,11 @@ ResultIt<T, internal::EachingIterator<T, BaseIt>> IteratorTransformingOperation<
 	return ResultIt<T, internal::EachingIterator<T, BaseIt>>(std::move(eachFunction), std::move(*static_cast<BaseIt*>(this)));
 }
 
+template <typename T, template<typename, typename> class ResultIt, typename BaseIt>
+ResultIt<T, internal::CopyingIterator<T, BaseIt>> IteratorTransformingOperation<T, ResultIt, BaseIt>::copy() {
+	return ResultIt<T, internal::CopyingIterator<T, BaseIt>>(std::move(*static_cast<BaseIt*>(this)));
+}
+
 }
 
 #endif

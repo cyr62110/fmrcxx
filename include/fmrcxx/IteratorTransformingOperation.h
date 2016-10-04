@@ -9,6 +9,7 @@
 #include <fmrcxx/internal/LimitingIterator.h>
 #include <fmrcxx/internal/SkippingIterator.h>
 #include <fmrcxx/internal/EachingIterator.h>
+#include <fmrcxx/internal/CopyingIterator.h>
 
 namespace fmrcxx {
 
@@ -36,6 +37,8 @@ public:
 	ResultIt<T, internal::SkippingIterator<T, BaseIt>> skip(std::uint32_t skip);
 
 	ResultIt<T, internal::EachingIterator<T, BaseIt>> each(std::function<void(T&)> eachFunction);
+
+	ResultIt<T, internal::CopyingIterator<T, BaseIt>> copy();
 };
 
 }
