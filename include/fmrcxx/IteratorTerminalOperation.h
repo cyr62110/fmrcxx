@@ -101,6 +101,7 @@ public:
 	/**
 	 * \brief Copy all items in the iterator into a new container.
 	 * \tparam Container Type of the container in which the item will be stored.
+	 * \tparam pT Type of pointer that should be used to
 	 * \tparam TPs Other template params of the container.
 	 *
 	 * ## Constraints
@@ -115,14 +116,20 @@ public:
 	 * the iterator, the item will be copied into newly dynamically allocated memory.
 	 *
 	 */
-	template <template <typename...> class Container, typename... TPs>
-	Container<T*, TPs...> copyTo();
+	template <template <typename...> class Container, typename pT = T*, typename... TPs>
+	Container<pT, TPs...> copyTo();
 
 private:
 	template <template <typename...> class Container, typename... TPs>
-	void internalTo(Container<T, TPs...>& container);
+	void appendToContainer(Container<T, TPs...>& container, T&& obj);
 	template <typename... TPs>
-	void internalTo(std::vector<T, TPs...>& vector);
+	void appendToContainer(std::vector<T, TPs...>& container, T&& obj);
+	// FIXME Implements for all std containers: list, set, etc...
+
+	template <template <typename...> class Container, typename pT, typename... TPs>
+	void appendToContainer(Container<pT, TPs...>& container, T* obj);
+	template <typename pT, typename... TPs>
+	void appendToContainer(std::vector<pT, TPs...>& container, T* obj);
 	// FIXME Implements for all std containers: list, set, etc...
 };
 

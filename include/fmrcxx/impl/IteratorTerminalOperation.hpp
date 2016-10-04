@@ -79,31 +79,47 @@ void IteratorTerminalOperation<T, It>::reduce(Acc& accumulator, std::function<vo
 template <typename T, typename It> template <template <typename...> class Container, typename... TPs>
 Container<T, TPs...> IteratorTerminalOperation<T, It>::to() {
 	Container<T, TPs...> container;
-	internalTo(container);
+	It& it = *((It*) this);
+	while (!it.fullyConsumed()) {
+		appendToContainer(container, std::move(it.next()));
+	}
 	return container;
 }
 
 template <typename T, typename It> template <template <typename...> class Container, typename... TPs>
-void IteratorTerminalOperation<T, It>::internalTo(Container<T, TPs...>& container) {
+void IteratorTerminalOperation<T, It>::appendToContainer(Container<T, TPs...>& container, T&& obj) {
 	throw exception::UnsupportedContainerTypeException();
 }
 
 template <typename T, typename It> template <typename... TPs>
-void IteratorTerminalOperation<T, It>::internalTo(std::vector<T, TPs...>& container) {
-	It& it = *((It*) this);
-	while (!it.fullyConsumed()) {
-		container.emplace_back(std::move(it.next()));
-	}
+void IteratorTerminalOperation<T, It>::appendToContainer(std::vector<T, TPs...>& container, T&& obj) {
+	container.emplace_back(std::move(obj));
 }
 
-template <typename T, typename It> template <template <typename...> class Container, typename... TPs>
-Container<T*, TPs...> IteratorTerminalOperation<T, It>::copyTo() {
+template <typename T, typename It> template <template <typename...> class Container, typename pT, typename... TPs>
+Container<pT, TPs...> IteratorTerminalOperation<T, It>::copyTo() {
 	It& it = *((It*) this);
-	Container<T*, TPs...> container;
-
-	// FIXME Implements
-
+	Container<pT, TPs...> container;
+	while (!it.fullyConsumed()) {
+		T* pNext = &it.next();
+		if (it.ownItem() && it.areItemAllocatedDynamically()) {
+			it.releaseOwnership();
+		} else {
+			pNext = new T(*pNext);
+		}
+		appendToContainer(container, pNext);
+	}
 	return container;
+}
+
+template <typename T, typename It> template <template <typename...> class Container, typename pT, typename... TPs>
+void IteratorTerminalOperation<T, It>::appendToContainer(Container<pT, TPs...>& container, T* obj) {
+	throw exception::UnsupportedContainerTypeException();
+}
+
+template <typename T, typename It> template <typename pT, typename... TPs>
+void IteratorTerminalOperation<T, It>::appendToContainer(std::vector<pT, TPs...>& container, T* obj) {
+	container.emplace_back(obj);
 }
 
 }

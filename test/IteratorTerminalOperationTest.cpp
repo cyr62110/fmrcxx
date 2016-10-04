@@ -111,3 +111,50 @@ TEST_CASE( "check to std::vector", "[IteratorTerminalOperation]" ) {
 	REQUIRE( LightTestObject::nbTimeMoveConstructorCalled >= 10 );
 }
 
+TEST_CASE( "check copy to std::vector using raw pointer with item not owned by the iterator", "[IteratorTerminalOperation]" ) {
+	LightTestObject::resetCounters();
+
+	std::vector<LightTestObject*> items = Range<int>(1, 5).map<LightTestObject>([](int& elt) {
+		return LightTestObject(elt);
+	}).copyTo<std::vector>();
+
+	REQUIRE( items.size() == 5 );
+	REQUIRE( items[2]->getValue() == 3 );
+	REQUIRE( LightTestObject::nbTimeConstructorCalled == 5 );
+	REQUIRE( LightTestObject::nbTimeMoveConstructorCalled == 5 );
+	REQUIRE( LightTestObject::nbTimeCopyConstructorCalled == 5 );
+	REQUIRE( LightTestObject::nbTimeDestructorCalled == 10 );
+
+	for (int i = 0; i < items.size(); i++) {
+		delete items[i];
+	}
+}
+
+TEST_CASE( "check copy to std::vector using raw pointer with item owned by the iterator", "[IteratorTerminalOperation]" ) {
+	LightTestObject::resetCounters();
+
+	std::vector<LightTestObject*> items = Range<int>(1, 5).map<LightTestObject>([](int& elt) {
+		return new LightTestObject(elt);
+	}).copyTo<std::vector>();
+
+	REQUIRE( items.size() == 5 );
+	REQUIRE( items[2]->getValue() == 3 );
+	REQUIRE( LightTestObject::nbTimeConstructorCalled == 5 );
+	REQUIRE( LightTestObject::nbTimeMoveConstructorCalled == 0 );
+	REQUIRE( LightTestObject::nbTimeCopyConstructorCalled == 0 );
+	REQUIRE( LightTestObject::nbTimeDestructorCalled == 0 );
+
+	for (int i = 0; i < items.size(); i++) {
+		delete items[i];
+	}
+}
+
+TEST_CASE( "check copy to std::vector using unique pointer", "[IteratorTerminalOperation]") {
+	std::vector<std::unique_ptr<LightTestObject>> items = Range<int>(1, 5).map<LightTestObject>([](int& elt) {
+		return new LightTestObject(elt);
+	}).copyTo<std::vector, std::unique_ptr<LightTestObject>>();
+
+	REQUIRE( items.size() == 5 );
+	REQUIRE( items[2]->getValue() == 3 );
+}
+
