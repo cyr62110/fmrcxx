@@ -67,6 +67,12 @@ public:
 
 	MappingIterator(MappingIterator&& rhs);
 
+	bool ownItem();
+
+	bool areItemAllocatedDynamically();
+
+	void releaseOwnership();
+
 FMRCXX_PRIVATE:
 	T* doComputeNext();
 
@@ -80,6 +86,12 @@ public:
 	MappingIterator(std::function<T*(I&)> mapFunction, It&& iterator);
 
 	MappingIterator(MappingIterator&& rhs);
+
+	bool ownItem();
+
+	bool areItemAllocatedDynamically();
+
+	void releaseOwnership();
 
 FMRCXX_PRIVATE:
 	T* doComputeNext();

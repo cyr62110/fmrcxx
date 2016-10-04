@@ -56,3 +56,27 @@ TEST_CASE ("check number of times constructor and destructor are called in dynam
 	REQUIRE ( LightTestObject::nbTimeDestructorCalled == 4 );
 }
 
+TEST_CASE ("check number of times destructor called when ownership released in dynamic MappingIterator", "[MappingIterator]") {
+	LightTestObject* ptrs[5];
+
+	Range<int> range1(1, 5);
+	MappingIterator<LightTestObject, int, Range<int>, true> it([](int& elt) {
+		return new LightTestObject(elt);
+	}, std::move(range1));
+
+	LightTestObject::resetCounters();
+
+	int i = 0;
+	while (!it.fullyConsumed()) {
+		ptrs[i] = &it.next();
+		it.releaseOwnership();
+		i++;
+	}
+
+	REQUIRE( LightTestObject::nbTimeDestructorCalled == 0 );
+
+	for (i = 0; i < 5; i++) {
+		delete ptrs[i];
+	}
+}
+

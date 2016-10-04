@@ -56,6 +56,20 @@ MappingIterator<T, I, It, UseDynamicAlloc>::MappingIterator(MappingIterator&& rh
 }
 
 template <typename T, typename I, typename It, bool UseDynamicAlloc>
+bool MappingIterator<T, I, It, UseDynamicAlloc>::ownItem() {
+	return true;
+}
+
+template <typename T, typename I, typename It, bool UseDynamicAlloc>
+bool MappingIterator<T, I, It, UseDynamicAlloc>::areItemAllocatedDynamically() {
+	return false;
+}
+
+template <typename T, typename I, typename It, bool UseDynamicAlloc>
+void MappingIterator<T, I, It, UseDynamicAlloc>::releaseOwnership() {
+}
+
+template <typename T, typename I, typename It, bool UseDynamicAlloc>
 T* MappingIterator<T, I, It, UseDynamicAlloc>::doComputeNext() {
 	if (this->iterator.fullyConsumed()) {
 		return nullptr;
@@ -92,6 +106,21 @@ template <typename T, typename I, typename It>
 MappingIterator<T, I, It, true>::MappingIterator(MappingIterator<T, I, It, true>&& rhs) :
 	TransformingIterator<T, It, MappingIterator<T, I, It, true>>(std::move(rhs)),
 	impl(std::move(rhs.impl)) {
+}
+
+template <typename T, typename I, typename It>
+bool MappingIterator<T, I, It, true>::ownItem() {
+	return true;
+}
+
+template <typename T, typename I, typename It>
+bool MappingIterator<T, I, It, true>::areItemAllocatedDynamically() {
+	return true;
+}
+
+template <typename T, typename I, typename It>
+void MappingIterator<T, I, It, true>::releaseOwnership() {
+	this->impl.pComputedNext.release();
 }
 
 template <typename T, typename I, typename It>
