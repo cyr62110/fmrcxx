@@ -8,6 +8,7 @@ set(SOURCES
 	IteratorTest.cpp
 	FmrcxxTest.cpp
 	RangeTest.cpp
+	RandomTest.cpp
 	IteratorTerminalOperationTest.cpp
 	IteratorMapTerminalOperationTest.cpp
 	IteratorArithmeticTerminalOperationTest.cpp
