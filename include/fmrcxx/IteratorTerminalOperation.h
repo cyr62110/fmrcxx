@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 
+#include <fmrcxx/Macro.h>
 #include <fmrcxx/IteratorMapTerminalOperation.h>
 #include <fmrcxx/IteratorArithmeticTerminalOperation.h>
 
@@ -119,7 +120,7 @@ public:
 	template <template <typename...> class Container, typename pT = T*, typename... TPs>
 	Container<pT, TPs...> copyTo();
 
-private:
+FMRCXX_PRIVATE:
 	template <template <typename...> class Container, typename... TPs>
 	void appendToContainer(Container<T, TPs...>& container, T&& obj);
 	template <typename... TPs>

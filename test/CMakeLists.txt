@@ -13,6 +13,7 @@ set(SOURCES
 	IteratorMapTerminalOperationTest.cpp
 	IteratorArithmeticTerminalOperationTest.cpp
 	IteratorTransformingOperationTest.cpp
+	internal/TypeUtilsTest.cpp
 	internal/StdContainerIteratorTest.cpp
 	internal/StdMapIteratorTest.cpp
 	internal/TransformingIteratorTest.cpp
