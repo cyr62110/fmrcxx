@@ -1,5 +1,7 @@
 #include "catch.hpp"
 
+#include <chrono>
+
 #include <fmrcxx/Random.h>
 
 using namespace fmrcxx;
