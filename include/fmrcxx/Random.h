@@ -21,17 +21,19 @@ public:
 	using type = std::uniform_int_distribution<T>;
 };
 
-template <typename T, typename RandomNumberEngine = std::default_random_engine, typename RandomNumberDistribution = typename default_distribution<T>::type>
+template <typename T, typename SeedType = unsigned int, typename RandomNumberEngine = std::default_random_engine, typename RandomNumberDistribution = typename default_distribution<T>::type>
 class Random :
 		public Iterator<T>,
 		public IteratorTransformingOperation<T, Iterator, Random<T>>,
 		public IteratorTerminalOperation<T, Random<T>> {
 public:
 	/**
-	 * \brief
+	 * \brief Construct an iterator that generates random numbers.
+	 * \param seed Seed to use for the random number engine.
+	 * \param args Arguments to forward to the constructor of the distribution.
 	 */
 	template <typename... Args>
-	Random(Args&&... args);
+	Random(SeedType seed, Args&&... args);
 
 	/**
 	 * \brief Move constructor

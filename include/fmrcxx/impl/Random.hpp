@@ -2,6 +2,7 @@
 #define FMRCXX_IMPL_RANDOM_H_
 
 #include <utility>
+#include <random>
 
 #include <fmrcxx/Random.h>
 
@@ -31,43 +32,43 @@ public:
 	using type = std::uniform_real_distribution<long double>;
 };
 
-template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution> template <typename... Args>
-Random<T, RandomNumberEngine, RandomNumberDistribution>::Random(Args&&... args) :
+template <typename T, typename SeedType, typename RandomNumberEngine, typename RandomNumberDistribution> template <typename... Args>
+Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>::Random(SeedType seed, Args&&... args) :
 	Iterator<T, std::nullptr_t>(),
-	engine(),
+	engine(seed),
 	distribution(std::forward<Args>(args)...) {
 }
 
-template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution>
-Random<T, RandomNumberEngine, RandomNumberDistribution>::Random(Random<T, RandomNumberEngine, RandomNumberDistribution>&& rhs) :
+template <typename T, typename SeedType, typename RandomNumberEngine, typename RandomNumberDistribution>
+Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>::Random(Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>&& rhs) :
 	Iterator<T, std::nullptr_t>(std::move(rhs)),
 	engine(rhs.engine),
 	distribution(rhs.distribution.param()) {
 }
 
-template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution>
-const RandomNumberEngine& Random<T, RandomNumberEngine, RandomNumberDistribution>::getEngine() const noexcept {
+template <typename T, typename SeedType, typename RandomNumberEngine, typename RandomNumberDistribution>
+const RandomNumberEngine& Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>::getEngine() const noexcept {
 	return this->engine;
 }
 
-template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution>
-const RandomNumberDistribution& Random<T, RandomNumberEngine, RandomNumberDistribution>::getDistribution() const noexcept {
+template <typename T, typename SeedType, typename RandomNumberEngine, typename RandomNumberDistribution>
+const RandomNumberDistribution& Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>::getDistribution() const noexcept {
 	return this->distribution;
 }
 
-template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution>
-bool Random<T, RandomNumberEngine, RandomNumberDistribution>::fullyConsumed() {
+template <typename T, typename SeedType, typename RandomNumberEngine, typename RandomNumberDistribution>
+bool Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>::fullyConsumed() {
 	return false;
 }
 
-template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution>
-T& Random<T, RandomNumberEngine, RandomNumberDistribution>::next() {
+template <typename T, typename SeedType, typename RandomNumberEngine, typename RandomNumberDistribution>
+T& Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>::next() {
 	current = distribution(engine);
 	return current;
 }
 
-template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution>
-bool Random<T, RandomNumberEngine, RandomNumberDistribution>::ownItem() {
+template <typename T, typename SeedType, typename RandomNumberEngine, typename RandomNumberDistribution>
+bool Random<T, SeedType, RandomNumberEngine, RandomNumberDistribution>::ownItem() {
 	return true;
 }
 

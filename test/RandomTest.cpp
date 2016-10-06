@@ -4,15 +4,33 @@
 
 using namespace fmrcxx;
 
+TEST_CASE( "check two random have same output if seeds are different", "[Random]" ) {
+	Random<int> rng1(1);
+	Random<int> rng2(1);
+
+	REQUIRE ( rng1.next() == rng2.next() );
+}
+
+TEST_CASE( "check two random have different output if seeds are different", "[Random]" ) {
+	Random<int> rng1(1);
+	Random<int> rng2(2);
+
+	REQUIRE ( rng1.next() != rng2.next() );
+}
+
 TEST_CASE( "check move construct random", "[Random]" ) {
-	Random<int> rng(1, 5);
+	unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+	Random<int> rng(seed, 1, 5);
 	Random<int> rng2(std::move(rng));
 
 	REQUIRE_FALSE( rng.fullyConsumed() );
 }
 
 TEST_CASE( "check random generate integer within range", "[Random]" ) {
-	Random<int> rng(1, 5);
+	unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+	Random<int> rng(seed, 1, 5);
 
 	int next = rng.next();
 	REQUIRE( next >= 1 );
@@ -20,7 +38,9 @@ TEST_CASE( "check random generate integer within range", "[Random]" ) {
 }
 
 TEST_CASE( "check random generate double within range", "[Random]" ) {
-	Random<double> rng(0, 1);
+	unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+	Random<double> rng(seed, 0, 1);
 
 	double next = rng.next();
 	REQUIRE( next >= 0 );
