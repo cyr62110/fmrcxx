@@ -29,7 +29,11 @@ bool Range<T>::fullyConsumed() {
 	if (Iterator<T>::fullyConsumed()) {
 		return true;
 	}
-	return this->current > this->end;
+	if (increment > 0) {
+		return this->current > this->end;
+	} else {
+		return this->current < this->end;
+	}
 }
 
 template <typename T>

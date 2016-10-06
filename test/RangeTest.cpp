@@ -20,6 +20,22 @@ TEST_CASE( "Range fullyConsumed", "[Range]" ) {
 	REQUIRE ( range4.fullyConsumed() );
 }
 
+TEST_CASE( "Range fullyConsumed with negative increment", "[Range]" ) {
+	Range<int> range(1, 1, -1);
+	REQUIRE_FALSE ( range.fullyConsumed() );
+
+	Range<int> range2(2, 1, -1);
+	range2.next();
+	REQUIRE_FALSE ( range2.fullyConsumed() );
+
+	Range<int> range3(0, 1, -1);
+	REQUIRE ( range3.fullyConsumed() );
+
+	Range<int> range4(1, 1, -1);
+	Range<int> range5(std::move(range4));
+	REQUIRE ( range4.fullyConsumed() );
+}
+
 TEST_CASE( "Range next", "[Range]" ) {
 	Range<int> range(1, 5);
 
@@ -28,6 +44,16 @@ TEST_CASE( "Range next", "[Range]" ) {
 	REQUIRE ( range.next() == 3 );
 	REQUIRE ( range.next() == 4 );
 	REQUIRE ( range.next() == 5 );
+}
+
+TEST_CASE( "Range next with negative increment", "[Range]" ) {
+	Range<int> range(5, 1, -1);
+
+	REQUIRE ( range.next() == 5 );
+	REQUIRE ( range.next() == 4 );
+	REQUIRE ( range.next() == 3 );
+	REQUIRE ( range.next() == 2 );
+	REQUIRE ( range.next() == 1 );
 }
 
 TEST_CASE ("Range filter", "[Range]") {
