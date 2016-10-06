@@ -10,6 +10,7 @@
 #include <fmrcxx/internal/SkippingIterator.h>
 #include <fmrcxx/internal/EachingIterator.h>
 #include <fmrcxx/internal/CopyingIterator.h>
+#include <fmrcxx/internal/ZippingIterator.h>
 
 namespace fmrcxx {
 
@@ -39,6 +40,9 @@ public:
 	ResultIt<T, internal::EachingIterator<T, BaseIt>> each(std::function<void(T&)> eachFunction);
 
 	ResultIt<T, internal::CopyingIterator<T, BaseIt>> copy();
+
+	template <typename T2, typename It2>
+	ResultIt<Tuple<T&, T2&>, internal::ZippingIterator<T, BaseIt, T2, It2>> zip(It2&& iterator);
 };
 
 }

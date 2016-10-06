@@ -36,3 +36,8 @@ TEST_CASE( "do skip compile", "[IteratorTransformingOperation]" ) {
 TEST_CASE( "do each compile", "[IteratorTransformingOperation]" ) {
 	Range<int>(1, 5).each([](int& elt) {});
 }
+
+TEST_CASE( "do zip compile", "[IteratorTransformingOperation]" ) {
+	Range<int> range(1, 5);
+	Range<int>(1, 5).zip<int>(std::move(range));
+}

@@ -40,6 +40,11 @@ ResultIt<T, internal::CopyingIterator<T, BaseIt>> IteratorTransformingOperation<
 	return ResultIt<T, internal::CopyingIterator<T, BaseIt>>(std::move(*static_cast<BaseIt*>(this)));
 }
 
+template <typename T, template<typename, typename> class ResultIt, typename BaseIt> template <typename T2, typename It2>
+ResultIt<Tuple<T&, T2&>, internal::ZippingIterator<T, BaseIt, T2, It2>> IteratorTransformingOperation<T, ResultIt, BaseIt>::zip(It2&& iterator) {
+	return ResultIt<Tuple<T&, T2&>, internal::ZippingIterator<T, BaseIt, T2, It2>>(std::move(*static_cast<BaseIt*>(this)), std::move(iterator));
+}
+
 }
 
 #endif
