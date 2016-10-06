@@ -1,6 +1,8 @@
 #ifndef FMRCXX_INTERNAL_IMPL_ZIPPINGITERATOR_HPP_
 #define FMRCXX_INTERNAL_IMPL_ZIPPINGITERATOR_HPP_
 
+#include <cstring>
+
 #include <fmrcxx/internal/ZippingIterator.h>
 
 namespace fmrcxx {
@@ -18,7 +20,7 @@ ZippingIterator<T1, It1, T2, It2>::ZippingIterator(ZippingIterator<T1, It1, T2, 
 	TransformingIterator<Tuple<T1&, T2&>, It1, ZippingIterator<T1, It1, T2, It2>>(std::move(rhs)),
 	iterator2(std::move(rhs.iterator2)),
 	hasComputedNext(rhs.hasComputedNext) {
-	memcpy(this->pComputedNext, rhs.pComputedNext, sizeof(Tuple<T1&, T2&>));
+	std::memcpy(this->pComputedNext, rhs.pComputedNext, sizeof(Tuple<T1&, T2&>));
 }
 
 template <typename T1, typename It1,  typename T2, typename It2>
