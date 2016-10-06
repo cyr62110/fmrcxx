@@ -24,7 +24,7 @@ namespace internal {
  * forEach is the terminal counterpart to the each operation.
  */
 template <typename T, typename It>
-class EachingIterator : FMRCXX_PRIVATE TransformingIterator<T, It, EachingIterator<T, It>> {
+class EachingIterator : public TransformingIterator<T, It, EachingIterator<T, It>> {
 public:
 	/**
 	 * \brief Constructor
@@ -38,9 +38,8 @@ public:
 	 */
 	EachingIterator(EachingIterator&& rhs);
 
-FMRCXX_PRIVATE:
 	T* doComputeNext();
-
+FMRCXX_PRIVATE:
 	std::function<void(T&)> eachFunction;
 };
 

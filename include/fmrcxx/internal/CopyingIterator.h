@@ -35,7 +35,7 @@ namespace internal {
  *
  */
 template <typename T, typename It>
-class CopyingIterator : FMRCXX_PRIVATE TransformingIterator<T, It, CopyingIterator<T, It>> {
+class CopyingIterator : public TransformingIterator<T, It, CopyingIterator<T, It>> {
 public:
 	/**
 	 * \brief Construct an iterator
@@ -51,8 +51,9 @@ public:
 	bool ownItem();
 	bool areItemAllocatedDynamically();
 	void releaseOwnership();
-FMRCXX_PRIVATE:
+
 	T* doComputeNext();
+FMRCXX_PRIVATE:
 	std::unique_ptr<T> computedNext;
 };
 

@@ -19,7 +19,7 @@ namespace internal {
  *
  */
 template <typename T, typename It>
-class SkippingIterator : TransformingIterator<T, It, SkippingIterator<T, It>> {
+class SkippingIterator : public TransformingIterator<T, It, SkippingIterator<T, It>> {
 public:
 	/**
 	 * \brief Construct a skipping transforming iterator
@@ -27,9 +27,10 @@ public:
 	SkippingIterator(std::uint32_t skip, It&& iterator);
 
 	SkippingIterator(SkippingIterator&& rhs);
-FMRCXX_PRIVATE:
+
 	T* doComputeNext();
 
+FMRCXX_PRIVATE:
 	std::uint32_t current;
 	std::uint32_t skip;
 };

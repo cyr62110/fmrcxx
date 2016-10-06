@@ -20,7 +20,7 @@ namespace internal {
  * is fully consumed, this iterator will be considered as fully consumed.
  */
 template <typename T1, typename It1,  typename T2, typename It2>
-class ZippingIterator : FMRCXX_PRIVATE TransformingIterator<Tuple<T1&, T2&>, It1, ZippingIterator<T1, It1, T2, It2>> {
+class ZippingIterator : public TransformingIterator<Tuple<T1&, T2&>, It1, ZippingIterator<T1, It1, T2, It2>> {
 public:
 	/**
 	 * \brief Construct the zipping iterator.
@@ -36,9 +36,8 @@ public:
 
 	~ZippingIterator();
 
-FMRCXX_PRIVATE:
 	Tuple<T1&, T2&>* doComputeNext();
-
+FMRCXX_PRIVATE:
 	bool hasComputedNext;
 	std::uint8_t pComputedNext[sizeof(Tuple<T1&, T2&>)];
 	It2&& iterator2;

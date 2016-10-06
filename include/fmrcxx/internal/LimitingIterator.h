@@ -34,9 +34,8 @@ public:
 	 */
 	LimitingIterator(LimitingIterator&& rhs);
 
-FMRCXX_PRIVATE:
 	T* doComputeNext();
-
+FMRCXX_PRIVATE:
 	std::uint32_t current;
 	std::uint32_t limit;
 };

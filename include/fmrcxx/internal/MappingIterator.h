@@ -61,7 +61,7 @@ namespace internal {
  *
  */
 template <typename T, typename I, typename It, bool UseDynamicAlloc>
-class MappingIterator : FMRCXX_PRIVATE TransformingIterator<T, It, MappingIterator<T, I, It, UseDynamicAlloc>> {
+class MappingIterator : public TransformingIterator<T, It, MappingIterator<T, I, It, UseDynamicAlloc>> {
 public:
 	MappingIterator(std::function<T(I&)> mapFunction, It&& iterator);
 
@@ -73,9 +73,8 @@ public:
 
 	void releaseOwnership();
 
-FMRCXX_PRIVATE:
 	T* doComputeNext();
-
+FMRCXX_PRIVATE:
 	class Impl;
 	Impl impl;
 };
@@ -93,9 +92,8 @@ public:
 
 	void releaseOwnership();
 
-FMRCXX_PRIVATE:
 	T* doComputeNext();
-
+FMRCXX_PRIVATE:
 	class Impl;
 	Impl impl;
 };
