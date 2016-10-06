@@ -42,7 +42,7 @@ template <typename T, typename RandomNumberEngine, typename RandomNumberDistribu
 Random<T, RandomNumberEngine, RandomNumberDistribution>::Random(Random<T, RandomNumberEngine, RandomNumberDistribution>&& rhs) :
 	Iterator<T, std::nullptr_t>(std::move(rhs)),
 	engine(rhs.engine),
-	distribution(rhs.distribution.param) {
+	distribution(rhs.distribution.param()) {
 }
 
 template <typename T, typename RandomNumberEngine, typename RandomNumberDistribution>
