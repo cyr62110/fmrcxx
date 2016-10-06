@@ -3,6 +3,7 @@
 
 #include <fmrcxx/Iterator.h>
 #include <fmrcxx/Range.h>
+#include <fmrcxx/Random.h>
 #include <fmrcxx/internal/StdMapIterator.h>
 #include <fmrcxx/internal/StdContainerIterator.h>
 
